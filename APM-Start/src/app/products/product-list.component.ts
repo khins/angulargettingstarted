@@ -3,9 +3,11 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'pm-products',
     templateUrl: './product-list.component.html'
-})
+  })
 export class ProductListComponent{
- pageTitle: string = 'Product Extravaganze List!!';
+ pageTitle: string = 'Product Extravaganza List!!';
+ imageWidth: number=50;
+ imageMargin: number=2;
  products: any[] =[
     {
         "productId": 1,
