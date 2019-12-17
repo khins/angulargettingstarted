@@ -12,15 +12,21 @@ export class ProductListComponent implements OnInit{
   constructor(private productService: ProductService) {
   }
 
-  performFilter(filteredBy: string): IProduct[] {
+  performFilter(filterBy: string): IProduct[] {
+    filterBy = filterBy.toLocaleLowerCase();
     return this.products.filter((product: IProduct) =>
-      product.productName.toLocaleLowerCase().indexOf(filteredBy.toLowerCase()) != -1);
+      product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
   
   ngOnInit(): void {
     console.log('in OnInit');
-    this.products = this.productService.getProducts();
-    this.filteredProducts = this.products;
+    this.productService.getProducts().subscribe(
+      products => {
+        this.products = products;
+        this.filteredProducts = this.products;
+      },
+      error => this.errorMessage = <any>error
+    );
   }
 
  pageTitle: string = 'Product Extravaganza List!!';
@@ -28,6 +34,7 @@ export class ProductListComponent implements OnInit{
  imageMargin: number=2;
  showImage: boolean = false;
  filteredProducts: IProduct[];
+ errorMessage: string;
 
  private _listFilter : string;
  public get listFilter() : string {
